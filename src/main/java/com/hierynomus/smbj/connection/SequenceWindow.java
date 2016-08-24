@@ -35,19 +35,19 @@ import java.util.concurrent.atomic.AtomicLong;
  * <li>For a multi-credit request as specified in section 3.2.4.1.5, the client MUST use the lowest available range of consecutive sequence numbers.</li>
  * </ul>
  */
-public class SequenceWindow {
-    public static final int PREFERRED_MINIMUM_CREDITS = 512;
+class SequenceWindow {
+    static final int PREFERRED_MINIMUM_CREDITS = 512;
     private AtomicLong lowestAvailable = new AtomicLong(0);
     private Semaphore available = new Semaphore(1);
 
-    public long get() {
+    long get() {
         if (available.tryAcquire()) {
             return lowestAvailable.getAndIncrement();
         }
         throw new SMBRuntimeException("No more credits available to hand out sequence number");
     }
 
-    public long[] get(int credits) {
+    long[] get(int credits) {
         if (available.tryAcquire(credits)) {
             long lowest = lowestAvailable.getAndAdd(credits);
             return range(lowest, lowest + credits);
@@ -55,15 +55,15 @@ public class SequenceWindow {
         throw new SMBRuntimeException("Not enough credits (" + available.availablePermits() + " available) to hand out " + credits + " sequence numbers");
     }
 
-    public void disableCredits() {
+    void disableCredits() {
         this.available = new NoopSemaphore();
     }
 
-    public int available() {
+    int available() {
         return available.availablePermits();
     }
 
-    public void creditsGranted(int credits) {
+    void creditsGranted(int credits) {
         available.release(credits);
     }
 
