@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.hierynomus.mssmb2.SMB2MessageFlag;
 import com.hierynomus.mssmb2.SMB2Packet;
+import com.hierynomus.protocol.commons.buffer.RawBuffer;
 import com.hierynomus.smbj.common.MessageSigning;
 import com.hierynomus.smbj.common.SMBBuffer;
 
@@ -82,7 +83,7 @@ public abstract class BaseTransport implements TransportLayer {
         }
     }
 
-    protected abstract void doWrite(SMBBuffer packetData) throws IOException;
+    protected abstract void doWrite(RawBuffer packetData) throws IOException;
 
 
     private static void signBuffer(SMBBuffer buffer, SecretKeySpec signingKeySpec) throws InvalidKeyException, NoSuchAlgorithmException {

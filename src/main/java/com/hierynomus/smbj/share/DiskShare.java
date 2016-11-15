@@ -35,6 +35,7 @@ import com.hierynomus.mssmb2.SMB2ShareAccess;
 import com.hierynomus.mssmb2.messages.*;
 import com.hierynomus.protocol.commons.EnumWithValue;
 import com.hierynomus.protocol.commons.buffer.Buffer;
+import com.hierynomus.protocol.commons.buffer.BufferException;
 import com.hierynomus.protocol.commons.buffer.Endian;
 import com.hierynomus.protocol.commons.concurrent.Futures;
 import com.hierynomus.smbj.common.SMBApiException;
@@ -169,7 +170,7 @@ public class DiskShare extends Share {
         try {
             return FileInformationFactory.parseFileAllInformation(
                 new Buffer.PlainBuffer(outputBuffer, Endian.LE));
-        } catch (Buffer.BufferException e) {
+        } catch (BufferException e) {
             throw new SMBRuntimeException(e);
         }
     }
@@ -186,7 +187,7 @@ public class DiskShare extends Share {
         try {
             return FileInformationFactory.parseFileAllInformation(
                 new Buffer.PlainBuffer(outputBuffer, Endian.LE));
-        } catch (Buffer.BufferException e) {
+        } catch (BufferException e) {
             throw new TransportException(e);
         }
     }
@@ -282,7 +283,7 @@ public class DiskShare extends Share {
         SecurityDescriptor sd = new SecurityDescriptor();
         try {
             sd.read(new SMBBuffer(outputBuffer));
-        } catch (Buffer.BufferException e) {
+        } catch (BufferException e) {
             throw new TransportException(e);
         }
         return sd;
@@ -297,7 +298,7 @@ public class DiskShare extends Share {
         SecurityDescriptor sd = new SecurityDescriptor();
         try {
             sd.read(new SMBBuffer(outputBuffer));
-        } catch (Buffer.BufferException e) {
+        } catch (BufferException e) {
             throw new TransportException(e);
         }
         return sd;

@@ -18,6 +18,7 @@ package com.hierynomus.smbj.transport.tcp;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.hierynomus.protocol.commons.buffer.RawBuffer;
 import com.hierynomus.smbj.common.SMBBuffer;
 import com.hierynomus.smbj.transport.BaseTransport;
 import com.hierynomus.smbj.transport.TransportLayer;
@@ -29,7 +30,7 @@ public class DirectTcpTransport extends BaseTransport implements TransportLayer 
     private static final Logger logger = LoggerFactory.getLogger(DirectTcpTransport.class);
 
     @Override
-    protected void doWrite(SMBBuffer packetData) throws IOException {
+    protected void doWrite(RawBuffer packetData) throws IOException {
         // Wrap in the Direct TCP packet header
         out.write(0);
         int available = packetData.available();

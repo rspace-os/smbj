@@ -16,7 +16,7 @@
 package com.hierynomus.mssmb2;
 
 import com.hierynomus.protocol.Packet;
-import com.hierynomus.protocol.commons.buffer.Buffer;
+import com.hierynomus.protocol.commons.buffer.BufferException;
 import com.hierynomus.smbj.common.SMBBuffer;
 
 public class SMB2Packet implements Packet<SMB2Packet, SMBBuffer> {
@@ -73,14 +73,14 @@ public class SMB2Packet implements Packet<SMB2Packet, SMBBuffer> {
         throw new UnsupportedOperationException("Should be implemented by specific message type");
     }
 
-    public final SMB2Packet read(SMBBuffer buffer) throws Buffer.BufferException {
+    public final SMB2Packet read(SMBBuffer buffer) throws BufferException {
         this.buffer = buffer; // remember the buffer we read it from
         header.readFrom(buffer);
         readMessage(buffer);
         return this;
     }
 
-    protected void readMessage(SMBBuffer buffer) throws Buffer.BufferException {
+    protected void readMessage(SMBBuffer buffer) throws BufferException {
         throw new UnsupportedOperationException("Should be implemented by specific message type");
     }
 }
