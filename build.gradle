@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat
 plugins {
   id "java"
   id "groovy"
+  id "maven"   // enables 'install' task into repository
   id "maven-publish"
   id "org.ajoberstar.release-opinion" version "1.4.2"
   id "com.github.hierynomus.license" version "0.12.1"
@@ -12,6 +13,7 @@ plugins {
 }
 
 group = "com.hierynomus"
+version = "0.0.7-rs1"
 defaultTasks "build"
 
 repositories {
@@ -63,6 +65,10 @@ task sourcesJar(type: Jar) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
   classifier = 'javadoc'
   from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
 }
 
 configurations {
